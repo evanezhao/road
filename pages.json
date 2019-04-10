@@ -1,9 +1,51 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/index/enter",
+			"style": {
+				"navigationBarTitleText": "请选择用户类型"
+			}
+		},
+			{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/index/my",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/index/pai",
+			"style": {
+				"navigationBarTitleText": "派单"
+			}
+		},
+		{
+			"path": "pages/customer/index",
+			"style": {
+				"navigationBarTitleText": "请求救援"
+			}
+		},
+		{
+			"path": "pages/driver/index",
+			"style": {
+				"navigationBarTitleText": "我的行程"
+			}
+		},
+		{
+			"path": "pages/manager/index",
+			"style": {
+				"navigationBarTitleText": "救援管理"
+			}
+		},
+		{
+			"path": "pages/servicer/index",
+			"style": {
+				"navigationBarTitleText": "救援管理"
 			}
 		}
 	],
@@ -12,5 +54,30 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#007AFF",
+		"borderStyle": "black",
+		"backgroundColor": "#F8F8F8",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/home.png",
+				"selectedIconPath": "static/homeHL.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/index/pai",
+				"iconPath": "static/tuoche.png",
+				"selectedIconPath": "static/tuocheHL.png",
+				"text": "派单"
+			},		
+			{
+				"pagePath": "pages/index/my",
+				"iconPath": "static/my.png",
+				"selectedIconPath": "static/myHL.png",
+				"text": "我的"
+			}
+		]
 	}
 }
