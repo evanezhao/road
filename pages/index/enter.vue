@@ -8,14 +8,15 @@
 				请选择您的角色：{{rule.name}}
 			</view>
 		</view>
-		<picker-view v-if="visible" :indicator-style="indicatorStyle" :value="value" @change="bindChange">
-			<picker-view-column>
-				<view class="item" v-for="(item,index) in rules" :key="index">{{item.name}}</view>
-			</picker-view-column>
-
-		</picker-view>
-		<view v-if="visible" class="uni-padding-wrap uni-float-bottom">
-			<button type="primary" @click="login">开始进入</button>
+		<view v-if="visible">
+			<picker-view :indicator-style="indicatorStyle" :value="value" @change="bindChange">
+				<picker-view-column>
+					<view class="item" v-for="(item,index) in rules" :key="index">{{item.name}}</view>
+				</picker-view-column>
+			</picker-view>
+			<view class="uni-padding-wrap uni-float-bottom">
+				<button type="primary" @click="login">开始进入</button>
+			</view>
 		</view>
 	</view>
 </template>
@@ -59,7 +60,7 @@
 			}
 		},
 		mounted() {
-			let rule = localStorage.getItem('rule');
+			let rule = uni.getStorageSync('rule');
 			if (!!rule) {
 				this.rule.key = rule;
 				this.ruleVisible = true;
@@ -67,7 +68,6 @@
 				setTimeout(() => {
 					this.login()
 				}, 3000);
-				//this.login();
 			}
 		},
 		computed: {
@@ -79,7 +79,10 @@
 				this.rule = this.rules[val[0]];
 			},
 			login(e) {
-				localStorage.setItem('rule', this.rule.key);
+				uni.setStorage({
+					key: 'rule',
+					data: this.rule.key
+				});
 				this.initUser({
 					rule: this.rule.key
 				});
@@ -105,6 +108,7 @@
 	}
 
 	.uni-float-bottom {
+		width: 100%;
 		position: fixed;
 		bottom: 0;
 	}

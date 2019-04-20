@@ -1,0 +1,7 @@
+bash.exe.stackdump
+.idea/
+.project
+*.iml
+.vscode
+unpackage/
+node_modules/
