@@ -37,14 +37,4 @@
 	.uni-hello-text {
 		color: #7A7E83;
 	}
-
-	.uni-hello-addfile {
-		text-align: center;
-		line-height: 300upx;
-		background: #FFF;
-		padding: 50upx;
-		margin-top: 10px;
-		font-size: 38upx;
-		color: #808080;
-	}
 </style>

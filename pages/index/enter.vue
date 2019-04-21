@@ -87,7 +87,7 @@
 					rule: this.rule.key
 				});
 				uni.switchTab({
-					url: '/pages/index/pai'
+					url: '/pages/customer/create'
 				});
 			},
 			...mapMutations(['initUser'])

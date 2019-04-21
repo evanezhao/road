@@ -1,15 +1,14 @@
 {
-	"pages": [
+	"pages": [{
+			"path": "pages/customer/create",
+			"style": {
+				"navigationBarTitleText": "我要求助"
+			}
+		},
 		{
 			"path": "pages/index/enter",
 			"style": {
 				"navigationBarTitleText": "请选择用户类型"
-			}
-		},
-			{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "首页"
 			}
 		},
 		{
@@ -22,6 +21,35 @@
 			"path": "pages/index/pai",
 			"style": {
 				"navigationBarTitleText": "派单"
+			}
+		},
+		{
+			"path": "pages/customer/create",
+			"style": {
+				"navigationBarTitleText": "我的救援信息"
+			}
+		},
+		{
+			"path": "pages/customer/choosePos/choosePos",
+			"style": {
+				"navigationBarTitleText": "选择拖送地址",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"text": "\u786e\u5b9a",
+							"fontSrc": "/static/uni.ttf",
+							"fontSize": "14px",
+							"fontWeight": "bold",
+							"color": "#007aff"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/customer/choosePos/viewPos",
+			"style": {
+				"navigationBarTitleText": "司机实时位置"
 			}
 		},
 		{
@@ -47,8 +75,10 @@
 			"style": {
 				"navigationBarTitleText": "救援管理"
 			}
+		}, {
+			"path": "pages/customer/choosePos/choosePos",
+			"style": {}
 		}
-		
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -56,28 +86,28 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式（list 的索引项）
+		"list": [{
+			"name": "costomer", //模式名称
+			"path": "pages/customer/create", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到。
+		}]
+	},
 	"tabBar": {
 		"color": "#7A7E83",
 		"selectedColor": "#007AFF",
 		"borderStyle": "black",
 		"backgroundColor": "#F8F8F8",
 		"list": [{
-				"pagePath": "pages/index/index",
-				"iconPath": "static/home.png",
-				"selectedIconPath": "static/homeHL.png",
-				"text": "首页"
-			},
-			{
-				"pagePath": "pages/index/pai",
+				"pagePath": "pages/customer/create",
 				"iconPath": "static/tuoche.png",
-				"selectedIconPath": "static/tuocheHL.png",
-				"text": "派单"
-			},		
+				"selectedIconPath": "static/tuocheHL.png"
+			},
 			{
 				"pagePath": "pages/index/my",
 				"iconPath": "static/my.png",
-				"selectedIconPath": "static/myHL.png",
-				"text": "我的"
+				"selectedIconPath": "static/myHL.png"
 			}
 		]
 	}
