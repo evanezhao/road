@@ -1,8 +1,13 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
+		<view class="uni-flex">
+			<view class="uni-flex-item">
+				<text class="uni-h1">{{dateTime.time}}</text>
+				<text class="uni-h6">{{weather.city}}</text>
+			</view>
+			<view class="uni-flex-item">
+				<text class="title">{{title}}</text>
+			</view>
 		</view>
 	</view>
 </template>
@@ -15,7 +20,11 @@
 			return {
 				title: '客户主页',
 				errorInfo: '暂时无法获取天气数据，请检查你的网络',
-				weather1: {
+				dateTime: {
+					time: '',
+					dateWeek: ''
+				},
+				weather: {
 					province: '', //省
 					city: '', //城市
 					reporttime: '', //报告时间
@@ -37,9 +46,16 @@
 				success: function(data) {
 					debugger;
 					let weather;
-					if (data && data.lives && data.lives.length) {						
+					if (data && data.lives && data.lives.length) {
 						weather = data.lives[0];
-						({...self.weather1} = weather);
+						self.weather.province = weather.province.data;
+						self.weather.city = weather.city.data;
+						self.weather.reporttime = weather.reporttime.data;
+						self.weather.humidity = weather.humidity.data;
+						self.weather.temperature = weather.temperature.data;
+						self.weather.weather = weather.weather.data;
+						self.weather.winddirection = weather.winddirection.data;
+						self.weather.windpower = weather.windpower.data;
 					}
 				},
 				fail: function(info) {
