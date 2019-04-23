@@ -7,11 +7,7 @@
 
 <script>
 	import amap from '@/common/amap-wx.js';
-	import {
-		mapState,
-		mapMutations
-	} from 'vuex';
-
+	
 	export default {
 		data() {
 			return {
@@ -103,10 +99,7 @@
 				}
 			});
 
-		},
-		computed: {
-			...mapState(['user'])
-		},
+		},		
 		methods: {}
 	}
 </script>

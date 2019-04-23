@@ -100,11 +100,20 @@ form {
 .uni-common-mb{
 	margin-bottom:30upx;
 }
+.uni-common-ml{
+	padding-left:30upx;
+}
+.uni-common-mr{
+	padding-right:30upx;
+}
 .uni-common-pb{
 	padding-bottom:30upx;
 }
 .uni-common-pl{
 	padding-left:30upx;
+}
+.uni-common-pr{
+	padding-right:30upx;
 }
 .uni-common-mt{
 	margin-top:30upx;
