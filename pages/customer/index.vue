@@ -29,15 +29,10 @@
 			<text class="title uni-h4 uni-center" style="width: 100%;">安全，是回家最近的路</text>
 		</view>
 		<view class="uni-flex uni-row">
-			<text class="uni-h6 uni-common-pl uni-common-pr" style="font-style: italic; text-align:left;text-indent:10upx">"Every
-				human being has a basic instinct: to help each other
-				out. If a hiker gets lost in the mountains, people will coordinate a search. If a train crashes, people will line
-				up to give blood. If an earthquake levels a city, people all over the world will send emergency supplies. This is
-				so fundamentally human that it's found in every culture without exception. Yes, there are assholes who just don't
-				care, but they're massively outnumbered by the people who do. "</text>
+			<text class="uni-h6 uni-common-pl uni-common-pr" style="font-style: italic; text-align:left;text-indent:10upx">"Every human being has a basic instinct: to help each other out. If a hiker gets lost in the mountains, people will coordinate a search. If a train crashes, people will line up to give blood. If an earthquake levels a city, people all over the world will send emergency supplies. This is so fundamentally human that it's found in every culture without exception. Yes, there are assholes who just don't care, but they're massively outnumbered by the people who do. "</text>
 		</view>
 		<view class="uni-flex uni-row uni-center" style="margin-top: 40upx;">
-			<view style="width: 100upx;height: 100upx;border-radius: 50upx;background-color: #09BB07;margin: 0 auto;line-height: 100upx;font-weight: border;color: #fff;">求援</view>
+			<view @click="navDetail" style="width: 100upx;height: 100upx;border-radius: 50upx;background-color: #09BB07;margin: 0 auto;line-height: 100upx;font-weight: border;color: #fff;">求援</view>
 		</view>
 		<view class="uni-flex uni-row uni-common-pl uni-common-pr uni-common-pb" style="align-self: flex-end;margin-top: 50upx;border: solid 1upx #96d9ec;background-color: #FFFFFF;">
 			<view class="uni-flex uni-column" style="width: 100%;">
@@ -48,8 +43,7 @@
 					<view class="uni-flex uni-column" style="justify-content: flex-start;align-self: center; width: 280upx;">
 						<text class="uni-h6">司机正在赶来</text>
 					</view>
-					<view class="uni-flex uni-column" style="justify-content: flex-end;align-self: center;" @click="navPosition">
-						<image src="../../static/pos_start.png" mode="aspectFit" style="margin: 0 auto;width: 80upx;height: 80upx;"></image>
+					<view class="uni-flex uni-column uni-icon uni-icon-navigate" style="justify-content: flex-end;align-self: center; color: #007AFF;" @click="navPosition">
 					</view>
 				</view>
 				<view class="uni-flex uni-row" style="width: 100%;">
