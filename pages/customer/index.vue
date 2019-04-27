@@ -1,40 +1,56 @@
 <template>
-	<view class="content" style="height: 100%; background: url(../../static/bg1.png) no-repeat fixed;background-size: cover;">
-		<view class="uni-flex uni-row" style="padding-top: 30upx;">
+	<view class="content uni-flex uni-column" style="width: 100%; height: 100%;">
+		<!-- <view class="uni-flex uni-row">
+			<view class="uni-flex uni-column">
+				<uni-icon type="spinner-cycle" size="20"></uni-icon>
+			</view>
+			<view class="uni-flex uni-column uni-common-pl">
+				<text class="uni-h5 uni-bold">今日天气</text>
+			</view>
+		</view> -->
+		<view class=" uni-flex uni-row fzfff uni-common-pa" style="background-color: #62ABF8;border-radius: 10upx;">
 			<view class="uni-flex uni-column" style="width: 50%;">
 				<view class="uni-flex uni-row">
 					<view class="uni-flex uni-column" style="width: 50%;">
-						<text class="uni-h3">{{weather.city}}</text>
+						<text class="uni-h3 fzfff">{{weather.city}}</text>
 					</view>
 					<view class="uni-flex uni-column uni-common-pb" style="width: 50%;align-self:flex-end; text-align: left;">
-						<text class="uni-h6">{{weather.province}}</text>
+						<text class="uni-h6 fzfff">{{weather.province}}</text>
 					</view>
 				</view>
 				<view class="uni-flex uni-row uni-common-pl">
-					<text class="uni-h6" v-html="dateTime"></text>
+					<text class="uni-h6 fzfff" v-html="dateTime"></text>
 				</view>
 			</view>
 			<view class="uni-flex uni-column" style="width: 50%;">
 				<view class="uni-flex uni-row">
-					<text class="title" style="width: 50%;">{{weather.weather}}</text>
-					<text class="title">{{weather.temperature}}°</text>
+					<text class="title fzfff" style="width: 50%;">{{weather.weather}}</text>
+					<text class="title fzfff">{{weather.temperature}}°</text>
 				</view>
 				<view class="uni-flex uni-row">
-					<text class="title" style="width: 50%;">{{weather.winddirection}}风</text>
-					<text class="title">{{weather.windpower}}级</text>
+					<text class="title fzfff" style="width: 50%;">{{weather.winddirection}}风</text>
+					<text class="title fzfff">{{weather.windpower}}级</text>
 				</view>
 			</view>
 		</view>
-		<view class="uni-flex uni-row" style="margin-top: 50upx;">
-			<text class="title uni-h4 uni-center" style="width: 100%;">安全，是回家最近的路</text>
+		<view class="uni-flex uni-row" style="margin: 50upx auto 50upx auto;">
+			<!-- <text class="title uni-h4 uni-center" style="width: 100%;">安全，是回家最近的路</text> -->
+			
+			<view class="uni-flex uni-column">
+				<uni-icon type="char" size="20"></uni-icon>
+			</view>
+			<view class="uni-flex uni-column uni-common-pl">
+				<text class="uni-h5 uni-bold">舒达救援</text>
+			</view>
 		</view>
 		<view class="uni-flex uni-row">
-			<text class="uni-h6 uni-common-pl uni-common-pr" style="font-style: italic; text-align:left;text-indent:10upx">"Every human being has a basic instinct: to help each other out. If a hiker gets lost in the mountains, people will coordinate a search. If a train crashes, people will line up to give blood. If an earthquake levels a city, people all over the world will send emergency supplies. This is so fundamentally human that it's found in every culture without exception. Yes, there are assholes who just don't care, but they're massively outnumbered by the people who do. "</text>
+			<text class="uni-h6 uni-common-pl uni-common-pr uni-bg-dark uni-color-797" style="font-style: italic; text-align:left;text-indent:10upx">
+				舒达成立于2015年，目前已经发展成为长沙最大的专业汽车救援机构，可向广大的汽车驾驶员提供全年365天，全天候24小时，全年无休的专业汽车救援服务</text>
 		</view>
-		<view class="uni-flex uni-row uni-center" style="margin-top: 40upx;">
-			<view @click="navDetail" style="width: 100upx;height: 100upx;border-radius: 50upx;background-color: #09BB07;margin: 0 auto;line-height: 100upx;font-weight: border;color: #fff;">求援</view>
+		<view class="uni-flex uni-row uni-center uni-common-mt uni-common-mb">
+			<view @click="navDetail" style="width: 100upx;height: 100upx;border-radius: 50upx;background-color: #0062BB;margin: 0 auto;line-height: 100upx;font-weight: border;color: #fff;">求援</view>
 		</view>
-		<view class="uni-flex uni-row uni-common-pl uni-common-pr uni-common-pb" style="align-self: flex-end;margin-top: 50upx;border: solid 1upx #96d9ec;background-color: #FFFFFF;">
+		<view class="uni-flex uni-row uni-common-pd" style="border: solid 1upx #96d9ec;background-color: #FFFFFF;">
 			<view class="uni-flex uni-column" style="width: 100%;">
 				<view class="uni-flex uni-row" style="height: 100upx;">
 					<view class="uni-flex uni-column" style="width: 100%;align-self: center;  justify-content: flex-start;">
@@ -43,7 +59,8 @@
 					<view class="uni-flex uni-column" style="justify-content: flex-start;align-self: center; width: 280upx;">
 						<text class="uni-h6">司机正在赶来</text>
 					</view>
-					<view class="uni-flex uni-column uni-icon uni-icon-navigate" style="justify-content: flex-end;align-self: center; color: #007AFF;" @click="navPosition">
+					<view class="uni-flex uni-column uni-icon uni-icon-navigate" style="justify-content: flex-end;align-self: center; color: #007AFF;"
+					 @click="navPosition">
 					</view>
 				</view>
 				<view class="uni-flex uni-row" style="width: 100%;">
@@ -62,7 +79,11 @@
 <script>
 	import amap from '@/common/amap-wx.js';
 	import config from '@/common/config.js';
+	import uniIcon from '@/components/uni-icon/uni-icon.vue';
 	export default {
+		components: {
+			uniIcon
+		},
 		data() {
 			return {
 				title: '客户主页',
@@ -173,5 +194,9 @@
 	.title {
 		font-size: 36upx;
 		color: #8f8f94;
+	}
+
+	.fzfff {
+		color: #fff;
 	}
 </style>

@@ -52,17 +52,18 @@
 			"style": {
 				"navigationBarTitleText": "救援管理"
 			}
+		}, {
+			"path": "pages/customer/my/my",
+			"style": {}
 		}
-	    ,{
-            "path" : "pages/customer/my/my",
-            "style" : {}
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarTitleText": "舒达救援",
+		"navigationBarBackgroundColor": "#FEFEFE",
+		"backgroundColor": "#FEFEFE",
+		"backgroundColorTop": "#FEFEFE",
+		"backgroundColorBottom": "#FEFEFE"
 	},
 	"condition": { //模式配置，仅开发期间生效
 		"current": 0, //当前激活的模式（list 的索引项）
@@ -77,16 +78,15 @@
 		"selectedColor": "#007AFF",
 		"borderStyle": "black",
 		"backgroundColor": "#F8F8F8",
-		"list": [
-			{
+		"list": [{
 				"pagePath": "pages/customer/index",
-				"iconPath": "static/home.png",
-				"selectedIconPath": "static/homeHL.png"
-			},		
+				"iconPath": "static/home1.png",
+				"selectedIconPath": "static/home1HL.png"
+			},			
 			{
 				"pagePath": "pages/customer/my/my",
-				"iconPath": "static/my.png",
-				"selectedIconPath": "static/myHL.png"
+				"iconPath": "static/my1.png",
+				"selectedIconPath": "static/m1HL.png"
 			}
 		]
 	}

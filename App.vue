@@ -17,10 +17,12 @@
 
 	/* 以下样式用于 hello uni-app 演示所需 */
 	page {
-		background-color: #F4F5F6;
+		background-color: #FEFEFE;
+		color:#989BA1;
 		height: 100%;
 		font-size: 28upx;
 		line-height: 1.8;
+		padding: 30upx;
 	}
 
 	.uni-header-logo {
