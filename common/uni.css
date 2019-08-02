@@ -73,6 +73,10 @@ form {
 	width:690upx;
 	padding:0 30upx;
 }
+.uni-margin-wrap{
+	margin:30upx;
+}
+
 .uni-word {
 	text-align: center;
 	padding:200upx 100upx;

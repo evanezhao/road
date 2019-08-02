@@ -54,10 +54,12 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "",
+        "appid" : "wx42cb6c1a281dc5c9",
         "setting" : {
             "urlCheck" : true
-        }
+        },
+		"requiredBackgroundModes": ["location"],
+        "permission" : {}
     },
     "h5" : {
         "devServer" : {

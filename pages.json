@@ -26,7 +26,13 @@
 		{
 			"path": "pages/customer/create",
 			"style": {
-				"navigationBarTitleText": "我的救援信息"
+				"navigationBarTitleText": "录入救援信息"
+			}
+		},
+		{
+			"path": "pages/customer/view",
+			"style": {
+				"navigationBarTitleText": "查看救援信息"
 			}
 		},
 		{
@@ -54,9 +60,17 @@
 			}
 		}, {
 			"path": "pages/customer/my/my",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
 		}
-	],
+	    ,{
+            "path" : "pages/customer/my/orderList",
+            "style": {
+            	"navigationBarTitleText": "我的记录"
+            }
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "舒达救援",
@@ -80,13 +94,15 @@
 		"backgroundColor": "#F8F8F8",
 		"list": [{
 				"pagePath": "pages/customer/index",
-				"iconPath": "static/home1.png",
-				"selectedIconPath": "static/home1HL.png"
+				"iconPath": "static/order24.png",
+				"selectedIconPath": "static/order24HL.png",
+				"text":"首页"
 			},			
 			{
 				"pagePath": "pages/customer/my/my",
 				"iconPath": "static/my1.png",
-				"selectedIconPath": "static/m1HL.png"
+				"selectedIconPath": "static/m1HL.png",
+				"text":"我的"
 			}
 		]
 	}

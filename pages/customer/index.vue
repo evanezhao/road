@@ -1,14 +1,6 @@
 <template>
-	<view class="content uni-flex uni-column" style="width: 100%; height: 100%;">
-		<!-- <view class="uni-flex uni-row">
-			<view class="uni-flex uni-column">
-				<uni-icon type="spinner-cycle" size="20"></uni-icon>
-			</view>
-			<view class="uni-flex uni-column uni-common-pl">
-				<text class="uni-h5 uni-bold">今日天气</text>
-			</view>
-		</view> -->
-		<view class=" uni-flex uni-row fzfff uni-common-pa" style="background-color: #62ABF8;border-radius: 10upx;">
+	<view class="content uni-flex uni-column" style="width: 100%; height: 98%; overflow-y: auto;">
+		<view class="uni-margin-wrap uni-flex uni-row fzfff uni-common-pa" style="background-color: #62ABF8;border-radius: 10upx;">
 			<view class="uni-flex uni-column" style="width: 50%;">
 				<view class="uni-flex uni-row">
 					<view class="uni-flex uni-column" style="width: 50%;">
@@ -32,47 +24,40 @@
 					<text class="title fzfff">{{weather.windpower}}级</text>
 				</view>
 			</view>
+		</view>		
+		<view class="uni-margin-wrap uni-flex uni-row uni-h6 uni-color-797" style="text-align:left;text-indent:10upx">
+			舒达成立于2015年，目前已经发展成为长沙最大的专业汽车救援机构，可向广大的汽车驾驶员提供全年365天，全天候24小时，全年无休的专业汽车救援服务
 		</view>
-		<view class="uni-flex uni-row" style="margin: 50upx auto 50upx auto;">
-			<!-- <text class="title uni-h4 uni-center" style="width: 100%;">安全，是回家最近的路</text> -->
-			
-			<view class="uni-flex uni-column">
-				<uni-icon type="char" size="20"></uni-icon>
-			</view>
-			<view class="uni-flex uni-column uni-common-pl">
-				<text class="uni-h5 uni-bold">舒达救援</text>
-			</view>
-		</view>
-		<view class="uni-flex uni-row">
-			<text class="uni-h6 uni-common-pl uni-common-pr uni-bg-dark uni-color-797" style="font-style: italic; text-align:left;text-indent:10upx">
-				舒达成立于2015年，目前已经发展成为长沙最大的专业汽车救援机构，可向广大的汽车驾驶员提供全年365天，全天候24小时，全年无休的专业汽车救援服务</text>
-		</view>
-		<view class="uni-flex uni-row uni-center uni-common-mt uni-common-mb">
-			<view @click="navDetail" style="width: 100upx;height: 100upx;border-radius: 50upx;background-color: #0062BB;margin: 0 auto;line-height: 100upx;font-weight: border;color: #fff;">求援</view>
-		</view>
-		<view class="uni-flex uni-row uni-common-pd" style="border: solid 1upx #96d9ec;background-color: #FFFFFF;">
+		<navigator v-show="!!orders" v-for="order in orders" :key="order.id" class="uni-margin-wrap uni-flex uni-row" :url="'/pages/customer/view?id='+order.id"
+		 style="border: solid 1upx #96d9ec;background-color: #FFFFFF;padding:0 30upx;border-radius:5px;">
 			<view class="uni-flex uni-column" style="width: 100%;">
 				<view class="uni-flex uni-row" style="height: 100upx;">
 					<view class="uni-flex uni-column" style="width: 100%;align-self: center;  justify-content: flex-start;">
-						<text class="title uni-h3" style="text-align: left;">湘H-123456</text>
+						<text class="title uni-h3" style="text-align: left;">{{order.cartNo}}</text>
 					</view>
 					<view class="uni-flex uni-column" style="justify-content: flex-start;align-self: center; width: 280upx;">
-						<text class="uni-h6">司机正在赶来</text>
+						<text class="uni-h6">{{order.statusText}}</text>
 					</view>
-					<view class="uni-flex uni-column uni-icon uni-icon-navigate" style="justify-content: flex-end;align-self: center; color: #007AFF;"
-					 @click="navPosition">
+					<view v-if="order.status>1" class="uni-flex uni-column uni-icon uni-icon-navigate" style="justify-content: flex-end;align-self: center; color: #007AFF;"
+					 @click.stop="navPosition">
 					</view>
 				</view>
 				<view class="uni-flex uni-row" style="width: 100%;">
 					<view class="uni-flex uni-column uni-h6" style="justify-content: flex-start;align-self: center;width: 70%;text-align: left;">
-						去往：长沙长沙长沙长沙长沙长沙
+						事故地：{{order.fromAddress}} <br />
+						目的地：{{order.toAddress}}
 					</view>
-					<view class="uni-flex uni-column" style="justify-content: flex-end;width: 30%;">
-						<button @click="navDetail" type="primary" class="uni-text-small" plain="true" style="width: 120upx;height: 60upx;font-weight: bold;">详情</button>
-					</view>
+					<navigator :url="'/pages/customer/choosePos/viewPos?id='+order.id" hover-class="navigator-hover" class="uni-flex uni-column"
+					 style="justify-content: flex-end;width: 30%;">
+						<button type="default" class="uni-text-small" style="width: 120upx;height: 60upx;margin-bottom: 30upx;;">详情</button>
+					</navigator>
 				</view>
 			</view>
-		</view>
+		</navigator>
+		<navigator url="/pages/customer/create" hover-class="navigator-hover" class="uni-margin-wrap uni-flex uni-row uni-center">
+			<button type="primary" style="width: 100%;">请求救援</button>
+		</navigator>
+
 	</view>
 </template>
 
@@ -98,7 +83,24 @@
 					weather: '', //天气
 					winddirection: '', //风向
 					windpower: '' //风力
-				}
+				},
+				orders: [{
+						id: 'a',
+						cartNo: '湘A-111111',
+						status: 2,
+						statusText: config.orderStatus['2'],
+						fromAddress: '北京海淀区沟沟',
+						toAddress: '北京昌平区沟沟'
+					},
+					{
+						id: 'b',
+						cartNo: '湘A-222222',
+						status: 0,
+						statusText: config.orderStatus['0'],
+						fromAddress: '北京海淀区沟沟1',
+						toAddress: '北京昌平区沟沟2'
+					}
+				]
 			}
 		},
 		onLoad() {
