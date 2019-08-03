@@ -24,7 +24,7 @@
 					<text class="title fzfff">{{weather.windpower}}级</text>
 				</view>
 			</view>
-		</view>		
+		</view>
 		<view class="uni-margin-wrap uni-flex uni-row uni-h6 uni-color-797" style="text-align:left;text-indent:10upx">
 			舒达成立于2015年，目前已经发展成为长沙最大的专业汽车救援机构，可向广大的汽车驾驶员提供全年365天，全天候24小时，全年无休的专业汽车救援服务
 		</view>
@@ -36,7 +36,7 @@
 						<text class="title uni-h3" style="text-align: left;">{{order.cartNo}}</text>
 					</view>
 					<view class="uni-flex uni-column" style="justify-content: flex-start;align-self: center; width: 280upx;">
-						<text class="uni-h6">{{order.statusText}}</text>
+						<text class="uni-h6" :style="'color:#'+order.color">{{order.statusText}}</text>
 					</view>
 					<view v-if="order.status>1" class="uni-flex uni-column uni-icon uni-icon-navigate" style="justify-content: flex-end;align-self: center; color: #007AFF;"
 					 @click.stop="navPosition">
@@ -47,10 +47,9 @@
 						事故地：{{order.fromAddress}} <br />
 						目的地：{{order.toAddress}}
 					</view>
-					<navigator :url="'/pages/customer/choosePos/viewPos?id='+order.id" hover-class="navigator-hover" class="uni-flex uni-column"
-					 style="justify-content: flex-end;width: 30%;">
+					<view class="uni-flex uni-column" style="justify-content: flex-end;width: 30%;">
 						<button type="default" class="uni-text-small" style="width: 120upx;height: 60upx;margin-bottom: 30upx;;">详情</button>
-					</navigator>
+					</view>
 				</view>
 			</view>
 		</navigator>
@@ -63,11 +62,17 @@
 
 <script>
 	import amap from '@/common/amap-wx.js';
-	import config from '@/common/config.js';
 	import uniIcon from '@/components/uni-icon/uni-icon.vue';
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex';
 	export default {
 		components: {
 			uniIcon
+		},
+		computed: {
+			...mapState(['user', 'GAODE_KEY', 'WEEK_ENUM', 'orderStatus', 'orderColor'])
 		},
 		data() {
 			return {
@@ -88,7 +93,7 @@
 						id: 'a',
 						cartNo: '湘A-111111',
 						status: 2,
-						statusText: config.orderStatus['2'],
+						statusText: '',
 						fromAddress: '北京海淀区沟沟',
 						toAddress: '北京昌平区沟沟'
 					},
@@ -96,7 +101,7 @@
 						id: 'b',
 						cartNo: '湘A-222222',
 						status: 0,
-						statusText: config.orderStatus['0'],
+						statusText: '',
 						fromAddress: '北京海淀区沟沟1',
 						toAddress: '北京昌平区沟沟2'
 					}
@@ -105,11 +110,15 @@
 		},
 		onLoad() {
 			let amapPlugin = new amap.AMapWX({
-					key: config.GAODE_KEY
+					key: this.GAODE_KEY
 				}),
 				self = this,
 				now = new Date();
-			self.dateTime = [now.getMonth() + 1, '月', now.getDate(), '日', '&nbsp;', config.WEEK_ENUM[now.getDay()]].join('');
+			self.dateTime = [now.getMonth() + 1, '月', now.getDate(), '日', '&nbsp;', this.WEEK_ENUM[now.getDay()]].join('');
+			this.orders.forEach((order)=>{
+				order.statusText = this.orderStatus[order.status];
+				order.color = this.orderColor[order.status];
+			});
 			/* amapPlugin.getWeather({
 				type: 'live',
 				success: function(data) { */

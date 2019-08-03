@@ -9,10 +9,10 @@
 			</view>
 			<view class="uni-flex uni-column" style="width: 60%; ">
 				<view class="uni-flex uni-row title uni-h3">
-					司机朋友
+					{{user.nickName}}
 				</view>
 				<view class="uni-flex uni-row">
-					185****1111DS
+					{{user.tel}}
 				</view>
 			</view>
 		</view>
@@ -25,6 +25,10 @@
 </template>
 
 <script>
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex';
 	import uniIcon from '@/components/uni-icon/uni-icon.vue';
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list/uni-list-item.vue'
@@ -34,6 +38,9 @@
 			uniIcon,
 			uniList,
 			uniListItem
+		},
+		computed:{
+			...mapState(['user'])
 		},
 		data() {
 			return {
