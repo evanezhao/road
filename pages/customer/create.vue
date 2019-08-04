@@ -11,8 +11,8 @@
 					<input class="uni-input" v-model="orderInfo.tel" type="number" maxlength="18" placeholder="请填写" />
 				</view>
 				<view class="uni-form-item uni-column">
-					<view class="title">车牌号码</view>
-					<input class="uni-input" v-model="orderInfo.cartNo" placeholder="请填写" @click="carInputClick" />
+					<view class="title">车牌号码 <text style="margin-left: 30upx;text-decoration: underline;color: #007AFF;" @click="carInputClick">请选择</text></view>
+					<input class="uni-input" disabled="true"  :value="orderInfo.cartNo" placeholder="请填写" />
 				</view>
 				<view class="uni-form-item uni-column">
 					<view class="title">车型</view>
