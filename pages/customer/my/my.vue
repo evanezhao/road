@@ -52,6 +52,11 @@
 				uni.navigateTo({
 					url:"/pages/customer/my/orderList"
 				});
+			},
+			tocard(){
+				uni.navigateTo({
+					url:"/pages/serachCar/serachCar"
+				});
 			}
 		}
 	}

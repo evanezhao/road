@@ -115,7 +115,7 @@
 				self = this,
 				now = new Date();
 			self.dateTime = [now.getMonth() + 1, '月', now.getDate(), '日', '&nbsp;', this.WEEK_ENUM[now.getDay()]].join('');
-			this.orders.forEach((order)=>{
+			this.orders.forEach((order) => {
 				order.statusText = this.orderStatus[order.status];
 				order.color = this.orderColor[order.status];
 			});
@@ -174,6 +174,10 @@
 					console.log(info);
 				} 
 			});*/
+			uni.setTabBarBadge({
+				index: 0,
+				text: '3'
+			});
 		},
 		methods: {
 			navDetail: () => {

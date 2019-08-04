@@ -12,7 +12,7 @@
 				</view>
 				<view class="uni-form-item uni-column">
 					<view class="title">车牌号码</view>
-					<input class="uni-input" v-model="orderInfo.cartNo" placeholder="请填写" />
+					<input class="uni-input" v-model="orderInfo.cartNo" placeholder="请填写" @click="carInputClick" />
 				</view>
 				<view class="uni-form-item uni-column">
 					<view class="title">车型</view>
@@ -49,16 +49,26 @@
 				<button type="primary" form-type="submit" style="width: 95%;">提交信息</button>
 			</view>
 		</form>
+		<plate-number ref="plate" v-model="orderInfo.cartNo" @on-input-change="onInputChang" @showOrHide="showOrHide"></plate-number>
 	</view>
 </template>
 
 <script>
+	import plateNumber from '@/components/plate-number/plateNumber.vue';
+	import cursor from '@/static/cursor.gif';
+	import energy from '@/static/energy.png';
 	var util = require('@/common/util.js');
 	var formatLocation = util.formatLocation;
 
 	export default {
+		components: {
+			plateNumber
+		},
 		data() {
 			return {
+				cursor: '', //输入焦点gif地址
+				isCursor: true, //是否显示焦点
+				energy: '', //新能源图标的地址
 				title: '请输入相关信息以便我们能更快到达现场',
 				carCateIndex: 0,
 				location: {},
@@ -76,13 +86,29 @@
 				}
 			}
 		},
-		onLoad() {},
+		onLoad() {
+
+		},
+		onShow() {
+			//初始化
+			// this.$refs.plate.init();
+			this.cursor = cursor;
+			this.energy = energy;
+			//this.carInputClick();
+		},
+		onHide() {
+			//恢复初始化
+			this.orderInfo.cartNo = '';
+		},
 		methods: {
 			bindPickerChange: function(e) {
 				this.orderInfo.carCate = this.carCate[e.target.value];
 			},
-			changeHang:function(e){
+			changeHang: function(e) {
 				this.orderInfo.hang = e.detail.value.length > 0;
+			},
+			onInputChang(val) {
+				this.orderInfo.cartNo = val;
 			},
 			chooseLocation: function(event, isToAddress) {
 				var self = this;
@@ -130,6 +156,18 @@
 						}
 					});
 				}
+			},
+			/**
+			 * @desc 车牌选择关闭和打开
+			 */
+			showOrHide(falg) {
+				this.isCursor = falg;
+			},
+			/**
+			 * @desc 显示车牌选择器
+			 */
+			carInputClick() {
+				this.$refs.plate.show();
 			}
 		}
 	}
