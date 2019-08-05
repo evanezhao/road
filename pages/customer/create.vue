@@ -12,7 +12,7 @@
 				</view>
 				<view class="uni-form-item uni-column">
 					<view class="title">车牌号码 <text style="margin-left: 30upx;text-decoration: underline;color: #007AFF;" @click="carInputClick">请选择</text></view>
-					<input class="uni-input" disabled="true"  :value="orderInfo.cartNo" placeholder="请填写" />
+					<input class="uni-input" disabled="true" :value="orderInfo.cartNo" placeholder="请填写" />
 				</view>
 				<view class="uni-form-item uni-column">
 					<view class="title">车型</view>
@@ -54,6 +54,10 @@
 </template>
 
 <script>
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex';
 	import plateNumber from '@/components/plate-number/plateNumber.vue';
 	import cursor from '@/static/cursor.gif';
 	import energy from '@/static/energy.png';
@@ -65,7 +69,7 @@
 			plateNumber
 		},
 		data() {
-			return {
+			return {				
 				cursor: '', //输入焦点gif地址
 				isCursor: true, //是否显示焦点
 				energy: '', //新能源图标的地址
@@ -86,6 +90,9 @@
 				}
 			}
 		},
+		computed:{
+			...mapState(['user'])
+		},
 		onLoad() {
 
 		},
@@ -101,6 +108,7 @@
 			this.orderInfo.cartNo = '';
 		},
 		methods: {
+			...mapMutations(['openLocAuto']),
 			bindPickerChange: function(e) {
 				this.orderInfo.carCate = this.carCate[e.target.value];
 			},
@@ -112,7 +120,16 @@
 			},
 			chooseLocation: function(event, isToAddress) {
 				var self = this;
-
+				if (this.user.isLocationAuto) {
+					this.openLocation(isToAddress);
+				}else{
+					this.openLocAuto(function(){
+						self.openLocation(isToAddress);
+					});
+				}
+			},
+			openLocation(isToAddress){
+				var self = this;
 				uni.chooseLocation({
 					success: (res) => {
 						console.log(res.longitude, res.latitude);

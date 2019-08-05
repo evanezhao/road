@@ -1,13 +1,32 @@
 <script>
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex';
 	export default {
-		onLaunch: function () {
+		onLaunch: function() {
+			var self = this;
+			//#ifdef MP-WEIXIN			
+			wx.getSetting({
+				success(res) {
+					console.log(res.authSetting);
+					if (res.authSetting['scope.userLocation']) {
+						self.setLocAuto(true);
+					}
+				}
+
+			});
+			//#endif
 			console.log('App Launch')
 		},
-		onShow: function () {
+		onShow: function() {
 			console.log('App Show')
 		},
-		onHide: function () {
+		onHide: function() {
 			console.log('App Hide')
+		},
+		methods: {
+			...mapMutations(['setLocAuto'])
 		}
 	}
 </script>
