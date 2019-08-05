@@ -120,6 +120,8 @@
 			},
 			chooseLocation: function(event, isToAddress) {
 				var self = this;
+				
+				//#ifdef MP-WEIXIN
 				if (this.user.isLocationAuto) {
 					this.openLocation(isToAddress);
 				}else{
@@ -127,6 +129,11 @@
 						self.openLocation(isToAddress);
 					});
 				}
+				//#endif
+				
+				//#ifdef H5
+				this.openLocation(isToAddress);
+				//#endif
 			},
 			openLocation(isToAddress){
 				var self = this;
