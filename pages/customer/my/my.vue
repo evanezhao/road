@@ -1,5 +1,5 @@
 <template>
-	<view class="uni-flex uni-column uni-margin-wrap">
+	<view class="uni-flex uni-column">
 		<view class="uni-flex uni-row" style="background-image: linear-gradient(to bottom, #99cccc 20%,#7171b7 80%);color: #fff;height: 200upx;padding-top: 40upx;">
 			<view class="uni-flex uni-column" style="width: 40%;align-items: center;justify-content: flex-start;">
 				<view class="uni-flex uni-row" style="justify-content: center;border-radius:60upx; background-color: #FFFFFF;">

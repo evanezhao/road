@@ -94,8 +94,8 @@
 		"backgroundColor": "#F8F8F8",
 		"list": [{
 				"pagePath": "pages/customer/index",
-				"iconPath": "static/order24.png",
-				"selectedIconPath": "static/order24HL.png",
+				"iconPath": "static/home1.png",
+				"selectedIconPath": "static/home1HL.png",
 				"text":"首页"
 			},			
 			{

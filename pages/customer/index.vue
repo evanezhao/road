@@ -1,6 +1,6 @@
 <template>
     <view class="content uni-flex uni-column" style="width: 100%; height: 98%; overflow-y: auto;">
-        <view class="uni-margin-wrap uni-flex uni-row fzfff uni-common-pa" style="background-color: #62ABF8;border-radius: 10upx;">
+        <view class="uni-flex uni-row fzfff uni-common-pa" style="background-color: #62ABF8;border-radius: 10upx;">
             <view class="uni-flex uni-column" style="width: 50%;">
                 <view class="uni-flex uni-row">
                     <view class="uni-flex uni-column" style="width: 50%;">
@@ -28,8 +28,8 @@
         <view class="uni-margin-wrap uni-flex uni-row uni-h6 uni-color-797" style="text-align:left;text-indent:10upx">
             舒达成立于2015年，目前已经发展成为长沙最大的专业汽车救援机构，可向广大的汽车驾驶员提供全年365天，全天候24小时，全年无休的专业汽车救援服务
         </view>
-        <navigator v-show="!!orders" v-for="order in orders" :key="order.id" class="uni-margin-wrap uni-flex uni-row" :url="'/pages/customer/view?id='+order.id"
-                   style="border: solid 1upx #96d9ec;background-color: #FFFFFF;padding:0 30upx;border-radius:5px;">
+        <navigator v-show="!!orders" v-for="order in orders" :key="order.id" class="uni-margin-wrap uni-flex uni-row uni-card-shadow" :url="'/pages/customer/view?id='+order.id"
+                   style="background-color: #FFFFFF;padding:0 30upx;border-radius:5px;">
             <view class="uni-flex uni-column" style="width: 100%;">
                 <view class="uni-flex uni-row" style="height: 100upx;">
                     <view class="uni-flex uni-column" style="width: 100%;align-self: center;  justify-content: flex-start;">

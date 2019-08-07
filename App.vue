@@ -44,4 +44,8 @@
 	.uni-hello-text {
 		color: #7A7E83;
 	}
+
+    .uni-card-shadow{
+        box-shadow: 0 0 30upx #9c9c9c;
+    }
 </style>
