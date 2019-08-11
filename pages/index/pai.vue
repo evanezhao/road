@@ -13,8 +13,7 @@
 
 <script>
 	import {
-		mapState,
-		mapMutations
+		mapState
 	} from 'vuex';
 
 	import amap from '../../common/amap-wx.js';

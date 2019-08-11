@@ -56,7 +56,7 @@
 <script>
 	import {
 		mapState,
-		mapMutations
+		mapActions
 	} from 'vuex';
 	import plateNumber from '@/components/plate-number/plateNumber.vue';
 	import cursor from '@/static/cursor.gif';
@@ -108,7 +108,7 @@
 			this.orderInfo.cartNo = '';
 		},
 		methods: {
-			...mapMutations(['openLocAuto']),
+			...mapActions(['openLocAuto']),
 			bindPickerChange: function(e) {
 				this.orderInfo.carCate = this.carCate[e.target.value];
 			},
@@ -125,7 +125,7 @@
 				if (this.user.isLocationAuto) {
 					this.openLocation(isToAddress);
 				}else{
-					this.openLocAuto(function(){
+					this.openLocAuto().then(function(){
 						self.openLocation(isToAddress);
 					});
 				}

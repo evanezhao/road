@@ -46,6 +46,11 @@
 			"style": {
 				"navigationBarTitleText": "我的行程"
 			}
+		}, {
+			"path": "pages/driver/view",
+			"style": {
+				"navigationBarTitleText": "查看订单详情"
+			}
 		},
 		{
 			"path": "pages/manager/index",
@@ -59,17 +64,21 @@
 				"navigationBarTitleText": "救援管理"
 			}
 		}, {
+			"path": "pages/servicer/view",
+			"style": {
+				"navigationBarTitleText": "查看订单详情"
+			}
+		}, {
 			"path": "pages/customer/my/my",
 			"style": {
 				"navigationBarTitleText": "我的"
 			}
+		}, {
+			"path": "pages/customer/my/orderList",
+			"style": {
+				"navigationBarTitleText": "我的记录"
+			}
 		}
-	    ,{
-            "path" : "pages/customer/my/orderList",
-            "style": {
-            	"navigationBarTitleText": "我的记录"
-            }
-        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -96,13 +105,13 @@
 				"pagePath": "pages/customer/index",
 				"iconPath": "static/home1.png",
 				"selectedIconPath": "static/home1HL.png",
-				"text":"首页"
-			},			
+				"text": "首页"
+			},
 			{
 				"pagePath": "pages/customer/my/my",
 				"iconPath": "static/my1.png",
 				"selectedIconPath": "static/m1HL.png",
-				"text":"我的"
+				"text": "我的"
 			}
 		]
 	}

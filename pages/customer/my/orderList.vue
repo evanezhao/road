@@ -30,8 +30,7 @@
 		orderColor
 	} = enumConfig;
 	import {
-		mapState,
-		mapMutations
+		mapState
 	} from 'vuex';
 	export default {
 		data() {

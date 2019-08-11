@@ -23,8 +23,7 @@
 
 <script>
 	import {
-		mapState,
-		mapMutations
+		mapState
 	} from 'vuex';
 	export default {
 		data() {
@@ -89,8 +88,7 @@
 				uni.switchTab({
 					url: '/pages/customer/create'
 				});
-			},
-			...mapMutations(['initUser'])
+			}
 		}
 	}
 </script>

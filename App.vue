@@ -1,7 +1,7 @@
 <script>
 	import {
 		mapState,
-		mapMutations
+		mapActions
 	} from 'vuex';
 	export default {
 		onLaunch: function() {
@@ -14,7 +14,7 @@
 			console.log('App Hide')
 		},
 		methods: {
-			...mapMutations(['setLocAuto'])
+			...mapActions(['setLocAuto'])
 		}
 	}
 </script>
