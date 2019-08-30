@@ -63,7 +63,8 @@
             "scope.userLocation" : {
                 "desc" : "您的位置信息将用于地图展示"
             }
-        }
+        },
+        "usingComponents" : true
     },
     "h5" : {
         "devServer" : {
@@ -72,6 +73,13 @@
         "title" : "舒达救援",
         "router" : {
             "base" : "/"
+        },
+        "sdkConfigs" : {
+            "maps" : {
+                "qqmap" : {
+                    "key" : "6SGBZ-JQWCQ-Z2K5T-GG2WV-FQEBS-WXF7O"
+                }
+            }
         }
     }
 }

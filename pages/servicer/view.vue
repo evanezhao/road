@@ -19,8 +19,8 @@
 
 			</view>
 			<view class="uni-form-item uni-column">
-				<view class="title">事故地址：</view>
-				<text class="uni-color-797 uni-common-ml">{{fromAddress}}</text>
+				<view class="title">事故地址：<text class="uni-color-797">(点击地址查看地图)</text></view>
+				<view @click="navMap" ><text class="uni-common-ml" style="text-decoration: underline;color: #007AFF;">{{fromAddress}}</text></view>
 			</view>
 			<view class="uni-form-item uni-column">
 				<view class="title">拖送地址：</view>
@@ -37,8 +37,8 @@
 			</view>
 		</view>
 		<view class="uni-form-item uni-column mb-20">
-			<navigator url="/pages/customer/choosePos/viewPos" class="uni-common-mt" hover-class="navigator-hover">
-				<button type="primary">查看位置</button>
+			<navigator url="/pages/servicer/chooseDriver" class="uni-common-mt" hover-class="navigator-hover">
+				<button type="primary">去处理</button>
 			</navigator>
 		</view>
 		<view style="position: fixed;right: 20upx;top:100upx; width: 300upx;height: 50upx;border-radius: 50upx;background-color: #576B95;color: #FFFFFF;font-size: 40upx;line-height: 50upx;text-align: center;padding: 30upx 0;">
@@ -78,15 +78,58 @@
 		},
 		onLoad(param) {
 			this.id = param.id;
-			uni.setNavigationBarTitle({
-				title: [this.cartNo, this.name, this.tel].join('-')
-			})
-		},
+            uni.setNavigationBarTitle({
+                title: [this.cartNo, this.name, this.tel].join('-')
+            });            
+        },
 		methods: {
+		    navMap(){				
+				uni.$once('getMarks', (callback) => {
+                    if (typeof callback === 'function') {
+                        callback([{
+                            iconPath: "/static/yuan.png",
+                            id: 0,
+                            latitude: 28.1941040000,
+                            longitude: 113.0132060000,
+                            title: '事故地址',
+                            width: 16,
+                            height: 16,
+                            callout: {
+                                content: '事故地址',
+                                borderRadius: 5,
+                                color: '#00B26A',
+                                padding: 5,
+                                display: 'ALWAYS',
+                                textAlign: 'center'
+                            }
+                        }, {
+                            iconPath: "/static/pos_end.png",
+                            id: 1,
+                            latitude: 28.1680160000,
+                            longitude: 113.0566740000,
+                            title: '拖送地址',
+                            width: 32,
+                            height: 32,
+                            callout: {
+                                content: '拖送地址',
+                                borderRadius: 5,
+                                color: '#00B26A',
+                                padding: 5,
+                                display: 'ALWAYS',
+                                textAlign: 'center'
+                            }
+                        }]);
+                    }
+                });
+				
+		        uni.navigateTo({
+		        	url:'/pages/viewPos'
+		        });
+			},
 			call(tel) {
 				uni.makePhoneCall({
 					phoneNumber: tel
-				})
+				});
 			}
 		}
 	}
