@@ -20,7 +20,7 @@
 				mapContext: {}
 			}
 		},
-		onLoad() {
+		onLoad(param) {
 			let marks = [],
 				polyline = [],
 				self = this,
@@ -30,8 +30,8 @@
 			this.mapContext = uni.createMapContext('mymap', this);
 
 			amapPlugin.getDrivingRoute({
-				origin: '116.407526,39.90403',
-				destination: '116.397827,39.90374',
+				origin: param.from,
+				destination: param.to,
 				strategy: 10,
 				success: (data) => {
 					let includePoints = [];

@@ -73,6 +73,11 @@
 			"style": {
 				"navigationBarTitleText": "分配司机"
 			}
+		},{
+			"path": "pages/servicer/create",
+			"style": {
+				"navigationBarTitleText": "派单"
+			}
 		}, {
 			"path": "pages/customer/my/my",
 			"style": {

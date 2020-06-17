@@ -3,7 +3,7 @@
 		<page-head v-if="!orders.length" title="暂无记录"></page-head>
 		<view v-if="orders.length>0" class="uni-list">
 			<block v-for="(order,index) in orders" :key="index">
-				<navigator :url="'/pages/customer/view?id='+order.id" class="uni-list-cell" hover-class="uni-list-cell-hover">
+				<navigator :url="'/pages/customer/view?id='+order._id" class="uni-list-cell" hover-class="uni-list-cell-hover">
 					<view class="uni-triplex-row">
 						<view class="uni-triplex-left" style="width: 75%;">
 							<view class="uni-title uni-ellipsis">{{order.cartNo}}<span class="uni-common-ml">{{order.name}}</span>
@@ -36,120 +36,51 @@
 		data() {
 			return {
 				loadMoreText: "加载中...",
-				showLoadMore: false,
+				showLoadMore: true,
 				max: 0,
-				orders: [{
-						id: 'a',
-						cartNo: '湘A-111111',
-						name: '1赵先生',
-						status: 2,
-						fromAddress: '北京海淀区沟沟',
-						toAddress: '北京昌平区沟沟北京昌平区沟沟北京昌平区沟沟',
-						createTime: '2019-8-1 12:30:00'
-					},
-					{
-						id: 'b',
-						cartNo: '湘A-222222',
-						name: '2天先生',
-						status: 0,
-						fromAddress: '北京海淀区沟沟1',
-						toAddress: '北京昌平区沟沟2北京昌平区沟沟北京昌平区沟沟',
-						createTime: '2019-10-11 12:30:00'
-					},
-					{
-						id: 'c',
-						cartNo: '湘A-222222',
-						name: '3天先生',
-						status: 0,
-						fromAddress: '北京海淀区沟沟1',
-						toAddress: '北京昌平区沟沟2北京昌平区沟沟北京昌平区沟沟',
-						createTime: '2019-10-11 12:30:00'
-					},
-					{
-						id: 'd',
-						cartNo: '湘A-222222',
-						name: '4天先生',
-						status: 0,
-						fromAddress: '北京海淀区沟沟1',
-						toAddress: '北京昌平区沟沟2北京昌平区沟沟北京昌平区沟沟',
-						createTime: '2019-10-11 12:30:00'
-					},
-					{
-						id: 'e',
-						cartNo: '湘A-222222',
-						name: '5天先生',
-						status: 0,
-						fromAddress: '北京海淀区沟沟1',
-						toAddress: '北京昌平区沟沟2北京昌平区沟沟北京昌平区沟沟',
-						createTime: '2019-10-11 12:30:00'
-					},
-					{
-						id: 'f',
-						cartNo: '湘A-222222',
-						name: '6天先生',
-						status: 0,
-						fromAddress: '北京海淀区沟沟1',
-						toAddress: '北京昌平区沟沟2北京昌平区沟沟北京昌平区沟沟',
-						createTime: '2019-10-11 12:30:00'
-					},
-					{
-						id: 'g',
-						cartNo: '湘A-222222',
-						name: '7天先生',
-						status: 0,
-						fromAddress: '北京海淀区沟沟1',
-						toAddress: '北京昌平区沟沟2北京昌平区沟沟北京昌平区沟沟',
-						createTime: '2019-10-11 12:30:00'
-					},
-					{
-						id: 'h',
-						cartNo: '湘A-222222',
-						name: '8天先生',
-						status: 0,
-						fromAddress: '北京海淀区沟沟1',
-						toAddress: '北京昌平区沟沟2北京昌平区沟沟北京昌平区沟沟',
-						createTime: '2019-10-11 12:30:00'
-					},
-					{
-						id: 'i',
-						cartNo: '湘A-222222',
-						name: '8天先生',
-						status: 0,
-						fromAddress: '北京海淀区沟沟1',
-						toAddress: '北京昌平区沟沟2北京昌平区沟沟北京昌平区沟沟',
-						createTime: '2019-10-11 12:30:00'
-					},
-					{
-						id: 'j',
-						cartNo: '湘A-222222',
-						name: '9天先生',
-						status: 0,
-						fromAddress: '北京海淀区沟沟1',
-						toAddress: '北京昌平区沟沟2北京昌平区沟沟北京昌平区沟沟',
-						createTime: '2019-10-11 12:30:00'
-					},
-					{
-						id: 'k',
-						cartNo: '湘A-222222',
-						name: '10天先生',
-						status: 0,
-						fromAddress: '北京海淀区沟沟1',
-						toAddress: '北京昌平区沟沟2北京昌平区沟沟北京昌平区沟沟',
-						createTime: '2019-10-11 12:30:00'
-					}
-
-				]
+				orders: []
 			}
 		},
 		computed: {
 			...mapState(['user', 'orderStatus', 'orderColor'])
 		},
 		onLoad() {
-			this.$data.orders.forEach(this.transferStatus);
+			const self = this;
+			//this.$data.orders.forEach(this.transferStatus);
+
+			self.$req({
+				url: self.$apis.order.getMyOrder,
+				method: 'GET',
+				data: {
+					type: '0'
+				},
+				success(res) {
+					self.showLoadMore = false;
+					if (res.data.status === 200) {
+
+						if (res.data.data.length) {
+							res.data.data.forEach(self.transferStatus);
+							self.orders = res.data.data;
+						}
+
+					} else {
+						uni.showToast({
+							title: `获取我的订单失败：${res.data.message}`,
+							icon: "none"
+						});
+					}
+				},
+				fail(err) {
+					uni.showToast({
+						title: `获取我的订单失败：${err.errMsg}`,
+						icon: "none"
+					});
+				}
+			});
 		},
-		methods:{
-			transferStatus(order){
-				var dateTimeArr = !!order.createTime ? order.createTime.split(/\s/g) : [];				
+		methods: {
+			transferStatus(order) {
+				var dateTimeArr = !!order.date ? order.date.split(/\s/g) : [];
 				order.createTime_Date = dateTimeArr.length > 0 ? dateTimeArr[0] : '';
 				order.createTime_Time = dateTimeArr.length > 1 ? dateTimeArr[1] : '';
 				order.statusText = this.orderStatus[order.status];
@@ -168,7 +99,7 @@
 					id: 'i',
 					cartNo: '京A-222222',
 					name: '天先生天先生',
-					status: 0,					
+					status: 0,
 					fromAddress: '北京海淀区沟沟1',
 					toAddress: '北京昌平区沟沟2北京昌平区沟沟北京昌平区沟沟',
 					createTime: '2019-10-11 12:30:00'

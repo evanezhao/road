@@ -1,6 +1,8 @@
 export default {
-	"LOGIN":'login',
-	"LOGOUT":'logout',
-	"SET_LOCAUTO":'setLocAuto',
-	"SET_RULE":'setRule'
+	"LOGIN": 'login',
+	"LOGOUT": 'logout',
+	"UPDATE_TOKEN":'updateToken',
+	"SET_WXCODE":'setWxCode',
+	"SET_WXLOGIN": 'setWXLogin',
+	"BIND_WXTEL":'bindWXTel'
 }

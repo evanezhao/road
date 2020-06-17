@@ -4,39 +4,80 @@ import config from '@/common/config';
 import MUTATION_TYPES from './mutation-types/mutation-types';
 
 Vue.use(Vuex);
+/**
+ * 将用户信息存储到本地缓存
+ */
+const storeUserInfo = store => {
+	store.subscribe(function(mutation, state) {
+		const mutationName = mutation.type.toUpperCase();
+		if (['LOGIN', 'LOGOUT', 'SETRULE', 'SETWXLOGIN', 'SETWXCODE', 'SETWXTEL', 'UPDATETOKEN'].indexOf(
+				mutationName) !==
+			-1) {
+			if (mutationName === 'LOGOUT') {
+				uni.removeStorage({
+					key: "user"
+				});
+			} else {
+				uni.setStorage({
+					key: "user",
+					data: JSON.parse(JSON.stringify(state.user))
+				});
+			}
+			return;
+		}
+	});
+}
 
+const initStorageData = {
+		islogin: false, //是否登录
+		token: '',
+		rule: 0, //用户角色 0：事故车主；1：司机；2：客服; 3: 管理员
+		wxCode: '', //微信CODE
+		wxSKey: '', //微信session_key 加密
+		wxLogin: false, //微信是否已登录
+		tel: '', //用户手机号
+		nickName: '亲爱的用户', //用户昵称
+		headImg: '' //用户头像
+	},
+	TRUE = true,
+	FALSE = false;
+
+const userstoredata = uni.getStorageSync('user');
+console.log(userstoredata);
+Object.assign(initStorageData, userstoredata || {});
 const store = new Vuex.Store({
 	state: {
-		user: {
-			isLocationAuto: false, //是否位置授权
-			islogin: false, //是否登录
-			token: '',
-			rule: 3, //用户角色 0：未初始化；1：事故车主；2：司机；3：客服
-			tel: '18555555555', //用户手机号
-			nickName: '司机朋友1', //用户昵称
-			headImg: '' //用户头像
-		},
+		user: initStorageData,
 		...config
 	},
 	mutations: {
 		[MUTATION_TYPES.LOGIN](state, provider) {
-			state.user.rule = provider.rule;
+			state.user.rule = +provider.rule;
 			state.user.token = provider.token;
 			state.user.nickName = provider.nickName;
 			state.user.headImg = provider.headImg;
+			state.user.wxSKey = provider.wxSKey;
+			state.user.tel = provider.tel;
+			state.user.islogin = true;
 		},
 		[MUTATION_TYPES.LOGOUT](state) {
-			state.user.rule = '';
+			state.user.rule = 0;
 			state.user.token = '';
 			state.user.tel = '';
-			state.user.nickName = '司机朋友';
+			state.user.nickName = '亲爱的用户';
 			state.user.headImg = '';
 		},
-		[MUTATION_TYPES.SET_LOCAUTO](state, val) {
-			state.user.isLocationAuto = val;
+		[MUTATION_TYPES.SET_WXCODE](state, code) {
+			state.user.wxCode = code;
 		},
-		[MUTATION_TYPES.SET_RULE](state, rule) {
-			state.user.rule = rule;
+		[MUTATION_TYPES.UPDATE_TOKEN](state, token) {
+			state.user.token = token;
+		},
+		[MUTATION_TYPES.SET_WXLOGIN](state, status) {
+			state.user.wxLogin = status;
+		},
+		[MUTATION_TYPES.BIND_WXTEL](state, tel) {
+			state.user.tel = tel;
 		}
 	},
 	actions: {
@@ -50,41 +91,28 @@ const store = new Vuex.Store({
 		}) {
 			commit(MUTATION_TYPES.LOGOUT);
 		},
-		setLocAuto({
+		setWXLogin({
 			commit
-		}) {
-			commit(MUTATION_TYPES.SET_LOCAUTO);
+		}, status) {
+			commit(MUTATION_TYPES.SET_WXLOGIN, status);
 		},
-		setRule({
+		setWXCode({
 			commit
-		}, rule) {
-			commit(MUTATION_TYPES.SET_RULE, rule);
+		}, code) {
+			commit(MUTATION_TYPES.SET_WXCODE, code);
 		},
-		openLocAuto({
+		updateToken({
 			commit
-		}) {
-			return new Promise((resolve, reject) => {
-				uni.showModal({
-					showCancel: false,
-					title: "位置申请",
-					content: "我们需要您授权使用您的位置信息，相关功能才能正常使用，请在接下来的设置中选择\"位置信息\" -> \"仅在使用小程序期间\" 或者 \"使用小程序期间和离开小程序后\"",
-					success() {
-						//#ifdef MP-WEIXIN
-						wx.openSetting({
-							success(res) {
-								let isAuto = !!res.authSetting['scope.userLocation'];
-								console.log(res.authSetting);
-								commit(MUTATION_TYPES.SET_LOCAUTO, isAuto);
-								resolve(isAuto);
-							},
-							fail: reject
-						});
-						//#endif
-					}
-				});
-			});
+		}, token) {
+			commit(MUTATION_TYPES.UPDATE_TOKEN, token);
+		},
+		setWXTel({
+			commit
+		}, tel) {
+			commit(MUTATION_TYPES.BIND_WXTEL, tel);
 		}
-	}
+	},
+	plugins: [storeUserInfo]
 });
 
 export default store;

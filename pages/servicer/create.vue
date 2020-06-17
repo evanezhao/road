@@ -39,10 +39,35 @@
 				</view>
 				<view class="uni-form-item uni-column">
 					<view class="title">预计费用</view>
-					<input class="uni-input" v-model="orderInfo.fee" placeholder="根据您填写的信息自动计算" />
+					<input class="uni-input" v-model="orderInfo.price" placeholder="根据您填写的信息自动计算" />
 				</view>
 				<view class="uni-form-item uni-column">
-					<view class="uni-row uni-center uni-h6">如您在救援车辆启程后取消本次服务,须支付预计费用50%的放空费用</view>
+					<view class="title">放空费用</view>
+					<input class="uni-input" v-model="orderInfo.fee" />
+				</view>
+				<view class="uni-form-item uni-column">
+					<view class="title">订单状态</view>
+					<picker placeholder="请选择" @change="bindStatusChange" :range="statusEnumArr" range-key="name">
+						<view class="uni-input">{{statusEnum[orderInfo.status]}}</view>
+					</picker>
+				</view>
+				<view class="uni-form-item uni-column">
+					<view class="title">支付类型</view>
+					<picker placeholder="请选择" @change="bindPayTypeChange" :range="payTypeEnumArr" range-key="name">
+						<view class="uni-input">{{payTypeEnum[orderInfo.payType]}}</view>
+					</picker>
+				</view>
+				<view class="uni-form-item uni-column">
+					<view class="title">单据状态(当支付类型为单据时生效)</view>
+					<picker placeholder="请选择" @change="bindBillStatusChange" :range="billStatusEnumArr" range-key="name">
+						<view class="uni-input">{{billStatusEnum[orderInfo.billStatus]}}</view>
+					</picker>
+				</view>
+				<view class="uni-form-item uni-column">
+					<view class="title">支付状态</view>
+					<picker placeholder="请选择" @change="bindPayStatusChange" :range="payStatusEnumArr" range-key="name">
+						<view class="uni-input">{{payStatusEnum[orderInfo.payStatus]}}</view>
+					</picker>
 				</view>
 			</view>
 			<view class="uni-form-item uni-column mb-20">
@@ -80,6 +105,10 @@
 				location: {},
 				carCate: ['小轿车', '中型SUV', '大型SUV', '中型卡车', '大型卡车', '公交车', '其它中型车', '其它大型车'],
 				address: '请选择',
+				statusEnumArr: [],
+				billStatusEnumArr: [],
+				payStatusEnumArr: [],
+				payTypeEnumArr: [],
 				orderInfo: {
 					name: '',
 					tel: '',
@@ -90,18 +119,56 @@
 					toPos: [],
 					toAddress: '',
 					hang: false,
+					status: 0,
+					payType: 0,
+					billStatus: -1,
+					payStatus: 0,
+					price: 0,
 					fee: 0
 				}
 			}
 		},
 		computed: {
-			...mapState(['user', 'GAODE_KEY'])
+			...mapState(['user', 'GAODE_KEY', 'statusEnum', 'billStatusEnum', 'payStatusEnum', 'payTypeEnum'])
 		},
 		onReady() {
 
 		},
 		onLoad() {
 			const self = this;
+
+			for (let key in self.statusEnum) {
+				if (self.statusEnum.hasOwnProperty(key)) {
+					self.statusEnumArr.push({
+						name: self.statusEnum[key],
+						value: key
+					});
+				}
+			}
+			for (let key in self.billStatusEnum) {
+				if (self.billStatusEnum.hasOwnProperty(key)) {
+					self.billStatusEnumArr.push({
+						name: self.billStatusEnum[key],
+						value: key
+					});
+				}
+			}
+			for (let key in self.payStatusEnum) {
+				if (self.payStatusEnum.hasOwnProperty(key)) {
+					self.payStatusEnumArr.push({
+						name: self.payStatusEnum[key],
+						value: key
+					});
+				}
+			}
+			for (let key in self.payTypeEnum) {
+				if (self.payTypeEnum.hasOwnProperty(key)) {
+					self.payTypeEnumArr.push({
+						name: self.payTypeEnum[key],
+						value: key
+					});
+				}
+			}
 			self.amapPlugin = new amap.AMapWX({
 				key: self.GAODE_KEY
 			});
@@ -136,6 +203,18 @@
 		methods: {
 			bindPickerChange: function(e) {
 				this.orderInfo.carCate = this.carCate[e.target.value];
+			},
+			bindStatusChange: function(e) {
+				this.orderInfo.status = this.statusEnumArr[e.target.value].value;
+			},
+			bindBillStatusChange: function(e) {
+				this.orderInfo.billStatus = this.billStatusEnumArr[e.target.value].value;
+			},
+			bindPayStatusChange: function(e) {
+				this.orderInfo.payStatus = this.payStatusEnumArr[e.target.value].value;
+			},
+			bindPayTypeChange: function(e) {
+				this.orderInfo.payType = this.payTypeEnumArr[e.target.value].value;
 			},
 			changeHang: function(e) {
 				this.orderInfo.hang = e.detail.value.length > 0;
@@ -221,7 +300,12 @@
 							toPos: orderInfo.toPos,
 							toAddress: orderInfo.toAddress,
 							hang: orderInfo.hang,
-							price: orderInfo.fee,
+							fee: orderInfo.fee,
+							price: orderInfo.price,
+							status: orderInfo.status,
+							payType: orderInfo.payType,
+							billStatus: orderInfo.billStatus,
+							payStatus: orderInfo.payStatus,
 							log: [{
 								cate: 1,
 								content: '创建订单'
