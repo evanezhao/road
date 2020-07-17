@@ -89,6 +89,7 @@
 				if (res && res.data && res.data.status === 200) {
 					this.login(res.data.data);
 				} else {
+					this.logout();
 					uni.showToast({
 						icon: 'none',
 						title: err && err.errMsg || res.data.message

@@ -43,9 +43,7 @@
 			</view>
 		</view>
 		<view class="uni-form-item uni-column">
-			<navigator :url="positionUrl" class="uni-common-mt" hover-class="navigator-hover">
-				<button type="warn">查看位置</button>
-			</navigator>
+			<button type="primary" @click="claim" style="width: 95%;">领取任务</button>
 		</view>
 	</view>
 </template>
@@ -75,11 +73,12 @@
 				billStatusText: '',
 				payStatus: 0,
 				payStatusText: '',
-				fromPos:[],
+				fromPos: [],
 				fromAddress: '',
-				positionUrl:'',
-				toPos:[],
+				positionUrl: '',
+				toPos: [],
 				toAddress: '',
+				driver: null,
 				hang: '',
 				fee: ''
 			}
@@ -131,6 +130,7 @@
 						statusText,
 						fromPos,
 						fromAddress,
+						driver,
 						toPos,
 						toAddress,
 						hang,
@@ -146,6 +146,7 @@
 					self.fromAddress = fromAddress;
 					self.toPos = toPos;
 					self.toAddress = toAddress;
+					self.driver = driver;
 					self.hang = hang;
 					self.fee = fee > 0 ? (fee + '元') : '待定';
 					self.positionUrl = `/pages/customer/choosePos/viewPos?from=${fromPos.join(",")}&to=${toPos.join(",")}`;
@@ -163,6 +164,28 @@
 				uni.makePhoneCall({
 					phoneNumber: tel
 				})
+			},
+			claim() {
+				//认领任务
+				this.$req({
+					url: self.$apis.order.claim,
+					data: {
+						oid: self.id
+					},
+					method: 'POST',
+					success(res) {
+						let opt ={};
+						if (res.data.status === 200) {
+							opt.content = '任务认领成功';
+						} else {
+							opt.content = '任务认领失败：' + res.data.message;
+						}
+						uni.showModal(opt);
+					},
+					fail(err) {
+						console.log(`认领失败：${err.errMsg}`);
+					}
+				});
 			}
 		}
 	}

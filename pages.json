@@ -73,7 +73,7 @@
 			"style": {
 				"navigationBarTitleText": "分配司机"
 			}
-		},{
+		}, {
 			"path": "pages/servicer/create",
 			"style": {
 				"navigationBarTitleText": "派单"
@@ -99,7 +99,7 @@
 				"navigationBarTitleText": "查看地图位置"
 			}
 		}
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "舒达救援",
@@ -125,7 +125,13 @@
 				"pagePath": "pages/index",
 				"iconPath": "static/home1.png",
 				"selectedIconPath": "static/home1HL.png",
-				"text": "首页"
+				"text": "救援"
+			},
+			{
+				"pagePath": "pages/viewPos",
+				"iconPath": "static/posBlack.png",
+				"selectedIconPath": "static/pos_start.png",
+				"text": "地图"
 			},
 			{
 				"pagePath": "pages/customer/my/my",

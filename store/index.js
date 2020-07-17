@@ -33,7 +33,6 @@ const initStorageData = {
 		token: '',
 		rule: 0, //用户角色 0：事故车主；1：司机；2：客服; 3: 管理员
 		wxCode: '', //微信CODE
-		wxSKey: '', //微信session_key 加密
 		wxLogin: false, //微信是否已登录
 		tel: '', //用户手机号
 		nickName: '亲爱的用户', //用户昵称
@@ -43,7 +42,7 @@ const initStorageData = {
 	FALSE = false;
 
 const userstoredata = uni.getStorageSync('user');
-console.log(userstoredata);
+//userstoredata.rule = parseInt(userstoredata.rule); //转换rule为数字
 Object.assign(initStorageData, userstoredata || {});
 const store = new Vuex.Store({
 	state: {
@@ -56,11 +55,11 @@ const store = new Vuex.Store({
 			state.user.token = provider.token;
 			state.user.nickName = provider.nickName;
 			state.user.headImg = provider.headImg;
-			state.user.wxSKey = provider.wxSKey;
 			state.user.tel = provider.tel;
 			state.user.islogin = true;
 		},
 		[MUTATION_TYPES.LOGOUT](state) {
+			state.user.islogin = false;
 			state.user.rule = 0;
 			state.user.token = '';
 			state.user.tel = '';

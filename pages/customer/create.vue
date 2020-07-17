@@ -126,9 +126,6 @@
 				}
 			});
 		},
-		onShow() {
-
-		},
 		onHide() {
 			//恢复初始化
 			this.orderInfo.cartNo = '';
@@ -186,7 +183,7 @@
 				var orderInfo = this.orderInfo,
 					err;
 
-				if (orderInfo.name === '') {
+				/* if (orderInfo.name === '') {
 					err = '请填写姓名'
 				} else if (orderInfo.tel === '') {
 					err = '请填写联系电话'
@@ -194,13 +191,15 @@
 					err = '请填写车牌号码'
 				} else if (orderInfo.carCate === '') {
 					err = '请选择车型'
-				} else if (orderInfo.fromAddress === '') {
+				} else */
+				if (orderInfo.fromAddress === '') {
 					err = '请选择事故地址'
-				} else if (orderInfo.toAddress === '') {
+				}
+				/* else if (orderInfo.toAddress === '') {
 					err = '请选择事故车送达地址'
 				} else {
 					err = '';
-				}
+				} */
 				if (!!err) {
 					uni.showToast({
 						icon: 'none',

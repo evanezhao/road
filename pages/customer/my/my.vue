@@ -117,7 +117,6 @@
 						self.login({
 							rule: resData.data.rule,
 							token: resData.data.token,
-							wxSKey: resData.data.skey,
 							tel: resData.data.tel,
 							nickName: self.wxUserInfo.nickName,
 							headImg: self.wxUserInfo.avatarUrl.replace('/132', '/64')
@@ -128,22 +127,44 @@
 			bindWXTel(e) {
 				const telData = e.detail;
 				const self = this;
+				const bindFun = (code)=>{
+					self.$req({
+						url: self.$apis.user.bindtel,
+						method: 'POST',
+						data: {						
+							encryptedData: telData.encryptedData,
+							code,
+							iv: telData.iv
+						},
+						success(res) {
+							console.log(res);
+							self.setWXTel(res.data.data.tel);
+						}
+					});
+				}
 				console.log('wxUserTelInfo', telData);
+				//#ifdef MP-WEIXIN
+				//重启微信登录
+				wx.login({
+					success: function(loginRes) {
+						console.log(loginRes);
 
-				self.$req({
-					url: self.$apis.user.bindtel,
-					method: 'POST',
-					data: {						
-						encryptedData: telData.encryptedData,
-						skey: self.user.wxSKey,
-						iv: telData.iv
+						if (loginRes.code) {
+							self.setWXCode(loginRes.code);	
+							bindFun(loginRes.code);
+						} else {
+							let errMsg = `登录失败！${loginRes.errMsg}`;
+							uni.showToast({
+								title: errMsg
+							});
+						}
 					},
-					success(res) {
-						console.log(res);
-						self.setWXTel(res.data.data.tel);
+					fail: function(err) {
+						console.log(err);
 					}
 				});
-
+				//#endif
+						
 			}
 		}
 	}

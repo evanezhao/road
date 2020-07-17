@@ -3,6 +3,7 @@
  */
 const local = {
 	data: [], //位置数据
+	reportTime: new Date().getTime(), //上报位置的时间
 	status: 0, //0停止采集 1正在采集
 	/**
 	 * 开始采集用户实时位置信息
@@ -21,26 +22,39 @@ const local = {
 					self.status = 1;
 					wx.onLocationChange(function(res) {
 						let posLen = self.data.length,
-							now = new Date(),
-							longitude = res.longitude, //经度
-							latitude = res.latitude; //纬度
-						if (posLen > 0) {
-							if (self.data[posLen - 1].longitude !== longitude || self.data[posLen - 1].latitude !== latitude) {
-								self.data.push({
-									now,
-									longitude,
-									latitude
-								});
+							pos = {
+								time: new Date().getTime(),
+								longitude: res.longitude, //经度
+								latitude: res.latitude //纬度
+							},
+							prevPos = posLen > 0 ? self.data[posLen - 1] : null;
+
+						if (prevPos) {
+							if (
+								(prevPos.longitude !== pos.longitude || prevPos.latitude !== pos.latitude) //当前位置不同于上一个位置
+								&&
+								(pos.time - prevPos.time) > 5000 //5秒采集一次位置
+							) {
+								self.data.push(pos);
+								console.log('location change', pos);
 							}
 						} else {
-							self.data.push({
-								now,
-								longitude,
-								latitude
-							});
+							self.data.push(pos);
+							console.log('location change', pos);
 						}
-						console.log('location change', self.data);
-
+						//todo:7秒上报一次数据 
+						if (self.data.length && pos.time - self.reportTime > 7000 && app.user.islogin) {
+							app.$req({
+								url: app.$apis.user.reportPostion,
+								method: 'POST',
+								data: {
+									pos: self.data.map(function(item, index) {
+										return `${item.time}|${item.latitude}|${item.longitude}`;
+									}).join(',')
+								}
+							});
+							self.data.length = 0;
+						}
 					});
 				},
 				fail: function(res) {
@@ -60,10 +74,11 @@ const local = {
 	/**
 	 * 终止采集用户实时位置
 	 */
-	endCollectPosInfo : function() {
+	endCollectPosInfo: function() {
 		this.status = 0;
 		// #ifdef MP-WEIXIN
 		wx.stopLocationUpdate();
 		// #endif
 	}
 }
+export default local;

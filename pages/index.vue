@@ -65,7 +65,6 @@
 
 <script>
 	import amap from '@/common/amap-wx.js';
-	import _reqs from '@/common/req.js';
 	import uniIcon from '@/components/uni-icon/uni-icon.vue';
 	import {
 		mapState,
@@ -109,6 +108,13 @@
 			}
 		},
 		onLoad() {
+			uni.showShareMenu({
+				withShareTicket: false,
+				title: '舒达汽车救援',
+				content: '舒达汽车救援提供7X24小时汽车救援服务',
+				menus: ['shareAppMessage']
+			});
+
 			let amapPlugin = new amap.AMapWX({
 					key: this.GAODE_KEY
 				}),
@@ -127,6 +133,10 @@
 		},
 		onShow() {
 			const self = this;
+
+			//todo: 采集位置测试, 测试代码需要删除
+			self.$localPos.startCollectPosInfo(self);
+
 			if (self.user.islogin) {
 				self.btnOpt.url = self.user.rule === 2 || self.user.rule === 3 ? "/pages/servicer/create" :
 					"/pages/customer/create";
@@ -171,6 +181,13 @@
 			} else {
 				this.createUrl = '/pages/customer/my/my';
 			}
+		},
+		onShareAppMessage(res) {
+			return {
+				title: '舒达汽车救援',
+				content: '舒达汽车救援提供7X24小时汽车救援服务',
+				path: '/pages/index'
+			};
 		},
 		methods: {
 			getWeather(amapPlugin) {
